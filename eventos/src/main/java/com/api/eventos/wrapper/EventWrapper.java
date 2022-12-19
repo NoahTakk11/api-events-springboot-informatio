@@ -1,13 +1,13 @@
 package com.api.eventos.wrapper;
 
-import com.api.eventos.dto.CasualEventDto;
-import com.api.eventos.entity.CasualEvent;
+import com.api.eventos.dto.EventDto;
+import com.api.eventos.entity.Event;
 
-public class CasualEventWrapper {
+public class EventWrapper {
 
-    public static CasualEvent dtoToEntity(CasualEventDto dto) {
-        if (dto == null) return new CasualEvent();
-        CasualEvent entity = new CasualEvent();
+    public static Event dtoToEntity(EventDto dto) {
+        if (dto == null) return new Event();
+        Event entity = new Event();
 
         entity.setId(dto.getId());
         entity.setName(dto.getName());
@@ -15,22 +15,22 @@ public class CasualEventWrapper {
         entity.setDescription(dto.getDescription());
         entity.setGenerationDate(dto.getGenerationDate());
         entity.setOrganization(dto.getOrganization());
-        entity.setIsActive(dto.getIsActive());
+        entity.setActive(dto.getActive());
 
 
         return entity;
     }
 
-    public static CasualEventDto entityToDto(CasualEvent entity) {
-        if (entity == null) return new CasualEventDto();
-        CasualEventDto dto = new CasualEventDto();
+    public static EventDto entityToDto(Event entity) {
+        if (entity == null) return new EventDto();
+        EventDto dto = new EventDto();
 
         dto.setName(entity.getName());
         dto.setDate(entity.getDate());
         dto.setDescription(entity.getDescription());
         dto.setGenerationDate(entity.getGenerationDate());
         dto.setOrganization(entity.getOrganization());
-        dto.setIsActive(entity.getIsActive());
+        dto.setActive(entity.getActive());
 
 
         return dto;

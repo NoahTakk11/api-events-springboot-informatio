@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,9 +25,12 @@ public class Appointment implements Serializable {
     private LocalDate date;
 
     @ManyToOne
-    @JoinColumn(name = "casual_event_id")
+    @JoinColumn(name = "event_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private CasualEvent event;
+    private Event event;
+
+    @OneToOne(mappedBy = "appointment", fetch = FetchType.LAZY)
+    private Person person;
 
 
     @ManyToOne
@@ -39,4 +43,5 @@ public class Appointment implements Serializable {
 
 
     private Boolean active;
+
 }

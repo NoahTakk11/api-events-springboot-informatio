@@ -18,13 +18,6 @@ public class OrganizationServiceImpl implements  IOrganizationService {
     @Autowired
     private IOrganizationDao dao;
 
-    @Override
-    public List<Organization> getAll() {
-        List<Organization> dtos = new ArrayList<>();
-        //dao.findAll().stream().forEach((o) -> dtos.add(OrganizationWrapper.entityToDto(o)));
-        dtos = dao.findAll();
-        return dtos;
-    }
 
     @Override
     public Organization findById(Long id) {
@@ -63,12 +56,17 @@ public class OrganizationServiceImpl implements  IOrganizationService {
 
     @Override
     public Organization findByAccessToken(String name) {
-        return dao.findByAccessToken(name);
+        return dao.findByAccessToken(name).orElseThrow();
     }
 
     @Override
     public List<Organization> customerGetAll() {
         return dao.customerGetAll();
+    }
+
+    @Override
+    public Organization findByCuit(String cuit) {
+        return dao.findByCuit(cuit).orElseThrow();
     }
 
 

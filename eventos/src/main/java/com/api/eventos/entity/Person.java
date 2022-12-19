@@ -1,6 +1,8 @@
 package com.api.eventos.entity;
 
 
+import com.api.eventos.entity.Event;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +26,12 @@ public class Person implements Serializable {
     private String name;
     private String lastname;
     private String dni;
+
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "appointment_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Appointment appointment;
+
     private String eventName;
     private String organizationName;
     private Date date;

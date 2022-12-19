@@ -1,6 +1,7 @@
 package com.api.eventos.restcontroller;
 
 import com.api.eventos.dto.PersonDto;
+import com.api.eventos.entity.Organization;
 import com.api.eventos.entity.Person;
 import com.api.eventos.service.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +24,7 @@ public class PersonController {
     private PersonServiceImpl service;
 
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> newOrganization(@RequestBody PersonDto dto) {
+    public ResponseEntity<Map<String, Object>> newPerson(@RequestBody @Valid PersonDto dto) {
         Map<String, Object> response = new HashMap<>();
         PersonDto newPerson = service.create(dto);
 
@@ -44,6 +46,28 @@ public class PersonController {
     public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "id") Long id) {
         Map<String, Object> response = new HashMap<>();
         Person person = service.findById(id).orElseThrow();
+
+        response.put("person", person);
+        response.put("message", "Person is find.");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/find/{dni}")
+    public ResponseEntity<Map<String, Object>> getByDni(@PathVariable(name = "dni") String dni) {
+        Map<String, Object> response = new HashMap<>();
+        Person person = service.findByDni(dni);
+
+        response.put("person", person);
+        response.put("message", "Person is find.");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/find/{lastname}")
+    public ResponseEntity<Map<String, Object>> getByLastname(@PathVariable(name = "lastname") String lastname) {
+        Map<String, Object> response = new HashMap<>();
+        Person person = service.findByLastname(lastname);
 
         response.put("person", person);
         response.put("message", "Person is find.");
@@ -101,4 +125,5 @@ public class PersonController {
         return responseEntity;
 
     }
+
 }

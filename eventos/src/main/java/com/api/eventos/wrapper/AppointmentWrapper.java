@@ -1,12 +1,12 @@
 package com.api.eventos.wrapper;
 
-import com.api.eventos.dto.AppointmentDto;
+import com.api.eventos.dto.CasualAppointmentDto;
 import com.api.eventos.entity.Appointment;
 
 
 public class AppointmentWrapper {
 
-    public static Appointment dtoToEntity(AppointmentDto dto) {
+    public static Appointment dtoToEntity(CasualAppointmentDto dto) {
         if (dto == null) return new Appointment();
         Appointment entity = new Appointment();
 
@@ -20,9 +20,9 @@ public class AppointmentWrapper {
         return entity;
     }
 
-    public static AppointmentDto entityToDto(Appointment entity) {
-        if (entity == null) return new AppointmentDto();
-        AppointmentDto dto = new AppointmentDto();
+    public static CasualAppointmentDto entityToDto(Appointment entity) {
+        if (entity == null) return new CasualAppointmentDto();
+        CasualAppointmentDto dto = new CasualAppointmentDto();
 
         dto.setId(entity.getId());
         dto.setEvent(entity.getEvent());

@@ -1,9 +1,9 @@
 package com.api.eventos.restcontroller;
 
-import com.api.eventos.dto.CasualEventDto;
-import com.api.eventos.entity.CasualEvent;
+import com.api.eventos.dto.EventDto;
+import com.api.eventos.entity.Event;
 import com.api.eventos.entity.Organization;
-import com.api.eventos.service.CasualEventServiceImpl;
+import com.api.eventos.service.EventServiceImpl;
 import com.api.eventos.service.OrganizationServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +17,12 @@ import java.util.*;
 
 @RequestMapping("api/v1/event/")
 @RestController
-public class CasualEventController {
+public class EventController {
 
-    private static final Logger log = LoggerFactory.getLogger(CasualEventController.class);
+    private static final Logger log = LoggerFactory.getLogger(EventController.class);
 
     @Autowired
-    private CasualEventServiceImpl service;
+    private EventServiceImpl service;
 
     @Autowired
     private OrganizationServiceImpl organizationService;
@@ -30,7 +30,7 @@ public class CasualEventController {
 
     @PostMapping("/create/access_token/{token}")
     public ResponseEntity<Object> newCasualEvent(@PathVariable(name = "token") String token,
-                                                         @Valid @RequestBody CasualEventDto dto) {
+                                                         @Valid @RequestBody EventDto dto) {
         Map<String, Object> response = new HashMap<>();
         Organization organizationObjective = organizationService.findByAccessToken(token);
 
@@ -53,9 +53,9 @@ public class CasualEventController {
 
 
     @PutMapping("/update")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody CasualEventDto dto){
+    public ResponseEntity<Map<String, Object>> update(@RequestBody EventDto dto){
         Map<String, Object> response = new HashMap<>();
-        CasualEventDto updateEvent = service.update(dto);
+        EventDto updateEvent = service.update(dto);
 
         if(updateEvent == null) {
             response.put("message", "Updated is fail.");
@@ -68,7 +68,7 @@ public class CasualEventController {
     @GetMapping("/find/all")
     public ResponseEntity<Map<String, Object>> getAll() {
         Map<String, Object> response = new HashMap<>();
-        List<CasualEvent> eventList = new ArrayList<>();
+        List<Event> eventList = new ArrayList<>();
         eventList = service.getAll();
         response.put("events", eventList);
 
@@ -78,12 +78,35 @@ public class CasualEventController {
     @GetMapping("/find/{id}")
     public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "id") Long id) {
         Map<String, Object> response = new HashMap<>();
-        Optional<CasualEvent> event = service.findById(id);
+        Optional<Event> event = service.findById(id);
 
         response.put("event", event);
         response.put("message", "Event is find.");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
+    }
+
+
+    @DeleteMapping("/delete/{id}/access_token/{token}")
+    public  ResponseEntity<Map<String, Object>> deleteById(@PathVariable(name = "id") Long id,
+                                                           @PathVariable( "token") String token) {
+
+
+        Organization organizationId = organizationService.findById(id);
+        Map<String, Object> response = new HashMap<>();
+        List<String> accessToken = new ArrayList<>();
+        accessToken.add(organizationId.getAccessToken());
+
+        ResponseEntity<Map<String, Object>> responseEntity = null;
+        if (accessToken.contains(token)) {
+            service.deleteById(id);
+            response.put("Event", "The event with id " + id + " has been deleted");
+            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            response.put("message", "Something has gone wrong");
+            responseEntity = new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+        return responseEntity;
     }
 
     /*@GetMapping("/find/{name}")

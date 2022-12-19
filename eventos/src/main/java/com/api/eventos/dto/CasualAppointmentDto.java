@@ -1,16 +1,18 @@
 package com.api.eventos.dto;
 
-import com.api.eventos.entity.CasualEvent;
+import com.api.eventos.entity.Event;
 import com.api.eventos.entity.Organization;
+import com.api.eventos.entity.Person;
 import com.api.eventos.security.PasswordGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-public class AppointmentDto {
+public class CasualAppointmentDto {
 
     @Getter
     @Setter
@@ -22,11 +24,16 @@ public class AppointmentDto {
 
     @Getter
     @Setter
-    private CasualEvent event;
+    @NotNull
+    private Event event;
 
     @Getter
     @Setter
     private Organization organization;
+
+    @Getter
+    @Setter
+    private Person person;
 
     @Getter
     private String alphanumericToken = PasswordGenerator.generatedAlphabeticKey(20);

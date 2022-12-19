@@ -50,16 +50,38 @@ public class OrganizationController {
     @GetMapping("/find/all")
     public ResponseEntity<Map<String, Object>> getAll() {
         Map<String, Object> response = new HashMap<>();
-        List<Organization> organizationList = service.getAll();
+        List<Organization> organizationList = service.customerGetAll();
 
         response.put("organizations", organizationList);
         return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Map<String, Object>> getById(@PathVariable(name = "id") Long id) {
         Map<String, Object> response = new HashMap<>();
         Organization organization = service.findById(id);
+
+        response.put("organization", organization);
+        response.put("message", "Organization is find.");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/find/cuit/{cuit}")
+    public ResponseEntity<Map<String, Object>> getByCuit(@PathVariable(name = "cuit") String cuit) {
+        Map<String, Object> response = new HashMap<>();
+        Organization organization = service.findByCuit(cuit);
+
+        response.put("organization", organization);
+        response.put("message", "Organization is find.");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/find/name/{name}")
+    public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "name") String name) {
+        Map<String, Object> response = new HashMap<>();
+        Organization organization = service.findByName(name);
 
         response.put("organization", organization);
         response.put("message", "Organization is find.");

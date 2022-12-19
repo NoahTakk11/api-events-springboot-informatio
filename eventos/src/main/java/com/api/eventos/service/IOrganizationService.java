@@ -2,29 +2,29 @@ package com.api.eventos.service;
 
 import com.api.eventos.dto.OrganizationDto;
 import com.api.eventos.entity.Organization;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IOrganizationService {
 
-    public List<Organization> getAll();
 
-    public Organization findById(Long id);
+    Organization findById(Long id);
 
-    public OrganizationDto create(OrganizationDto dto);
+    OrganizationDto create(OrganizationDto dto);
 
     Organization findByName(String name);
 
-    public Boolean deleteById(Long id);
+    Boolean deleteById(Long id);
 
-    public OrganizationDto update(OrganizationDto dto);
+    OrganizationDto update(OrganizationDto dto);
 
     Organization findByAccessToken(String name);
 
-    public List<Organization> customerGetAll();
+    List<Organization> customerGetAll();
 
-    /*public OrganizationDto partialUpdate(OrganizationDto dto);*/
-
+    Organization findByCuit(String cuit);
 
 
 }

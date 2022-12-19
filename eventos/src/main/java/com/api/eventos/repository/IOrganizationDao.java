@@ -14,9 +14,8 @@ import java.util.Optional;
 @Repository
 public interface IOrganizationDao extends JpaRepository<Organization, Long> {
 
-    public Organization findByName(String name);
 
-    public Organization findByAccessToken(String token);
+    Optional<Organization> findByAccessToken(String token);
 
     @Modifying
     @Transactional
@@ -26,5 +25,11 @@ public interface IOrganizationDao extends JpaRepository<Organization, Long> {
 
     @Query(value = "SELECT o FROM organization o WHERE active=true")
     List<Organization> customerGetAll();
+
+    @Query(value = "SELECT o FROM organization o WHERE active=true AND cuit= :cuit")
+    Optional<Organization> findByCuit(String cuit);
+
+    @Query(value = "SELECT o FROM organization o WHERE active=true AND name= :name")
+    Optional<Organization> findByName(String name);
 
 }

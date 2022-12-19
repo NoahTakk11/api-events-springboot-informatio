@@ -18,7 +18,8 @@ public class PersonWrapper {
         entity.setLastname(dto.getLastname());
         entity.setEventName(dto.getEventName());
         entity.setOrganizationName(dto.getOrganizationName());
-
+        entity.setAlphanumerickey(dto.getAlphanumerickey());
+        entity.setAppointment(dto.getAppointment());
 
         return entity;
     }

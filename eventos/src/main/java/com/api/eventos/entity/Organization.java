@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -24,18 +23,15 @@ public class Organization implements Serializable {
     private Long id;
 
     private String name;
-    private Double cuit;
-    private Double phone;
+    private String cuit;
+    private String phone;
 
     private String email;
     private String address;
-    private Date generationDate;
+    private String generationDate;
 
     @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
-    private List<CasualEvent> events;
-
-    @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
-    private List<RegularEvent> regularEvents;
+    private List<Event> events;
 
     @OneToMany(mappedBy = "organization", fetch = FetchType.LAZY)
     List<Appointment> apointments;

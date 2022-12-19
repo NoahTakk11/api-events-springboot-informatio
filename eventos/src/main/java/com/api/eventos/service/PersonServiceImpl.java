@@ -18,7 +18,7 @@ public class PersonServiceImpl implements IPersonService{
 
     @Override
     public List<Person> getAll() {
-        return dao.findAll();
+        return dao.customerGetAll();
     }
 
 
@@ -34,7 +34,7 @@ public class PersonServiceImpl implements IPersonService{
 
     @Override
     public PersonDto create(PersonDto dto) {
-        Person newEvent = dao.save(PersonWrapper.dtoToEntity(dto));
+        Person newPerson = dao.save(PersonWrapper.dtoToEntity(dto));
         return dto;
     }
 
@@ -64,10 +64,22 @@ public class PersonServiceImpl implements IPersonService{
     @Override
     public Boolean deleteById(Long id ) {
         try {
-            dao.deleteById(id);
+            dao.logicDeleted(id);
             return true;
-        } catch (Exception err) {
+        }catch (Exception err) {
             return false;
         }
+
+
+    }
+
+    @Override
+    public Person findByDni(String dni) {
+        return dao.findByDni(dni).orElseThrow();
+    }
+
+    @Override
+    public Person findByLastname(String lastname) {
+        return dao.findByLastname(lastname).orElseThrow();
     }
 }
