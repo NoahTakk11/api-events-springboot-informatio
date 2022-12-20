@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Date;
 
 @NoArgsConstructor
 public class CasualAppointmentDto {
@@ -20,7 +21,7 @@ public class CasualAppointmentDto {
 
     @Getter
     @Setter
-    private LocalDate date;
+    private Date date;
 
     @Getter
     @Setter

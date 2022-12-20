@@ -16,6 +16,7 @@ public class AppointmentWrapper {
         entity.setActive(dto.getActive());
         entity.setDate(dto.getDate());
         entity.setAlphanumericToken(dto.getAlphanumericToken());
+        entity.setPerson(dto.getPerson());
 
         return entity;
     }

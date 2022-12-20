@@ -23,18 +23,15 @@ public class PersonDto {
 
     private Long id;
 
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
+    @NotEmpty(message = "Lastname cannot be empty")
     private String lastname;
+    @NotEmpty(message = "Dni cannot be empty")
     private String dni;
 
     private Appointment appointment;
 
-    private String eventName;
-    private String organizationName;
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date date;
-
-    private String alphanumerickey = PasswordGenerator.generatedAlphabeticKey(10);
+    private String alphanumericKey = PasswordGenerator.generatedAlphabeticKey(10);
     private Boolean active = true;
 }

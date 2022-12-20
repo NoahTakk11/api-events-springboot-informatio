@@ -1,6 +1,8 @@
 package com.api.eventos.service;
 
+import com.api.eventos.dto.OrganizationDto;
 import com.api.eventos.dto.PersonDto;
+import com.api.eventos.entity.Organization;
 import com.api.eventos.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,12 +21,16 @@ public interface IPersonService {
 
     public PersonDto create(PersonDto dto);
 
-    public PersonDto update(PersonDto dto);
+
 
     public Boolean deleteById(Long id);
 
     Person findByDni(String dni);
 
     Person findByLastname(String lastname);
+
+    void update(Long id, PersonDto dto);
+
+    Person findByAccessToken(String name);
 
 }

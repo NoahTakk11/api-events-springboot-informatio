@@ -11,14 +11,10 @@ public class PersonWrapper {
 
         entity.setId(dto.getId());
         entity.setName(dto.getName());
-        entity.setDate(dto.getDate());
         entity.setActive(dto.getActive());
-        entity.setDate(dto.getDate());
         entity.setDni(dto.getDni());
         entity.setLastname(dto.getLastname());
-        entity.setEventName(dto.getEventName());
-        entity.setOrganizationName(dto.getOrganizationName());
-        entity.setAlphanumerickey(dto.getAlphanumerickey());
+        entity.setAlphanumericKey(dto.getAlphanumericKey());
         entity.setAppointment(dto.getAppointment());
 
         return entity;
@@ -30,14 +26,9 @@ public class PersonWrapper {
 
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setDate(entity.getDate());
         dto.setActive(entity.getActive());
-        dto.setDate(entity.getDate());
         dto.setDni(entity.getDni());
         dto.setLastname(entity.getLastname());
-        dto.setEventName(entity.getEventName());
-        dto.setOrganizationName(entity.getOrganizationName());
-
 
         return dto;
     }

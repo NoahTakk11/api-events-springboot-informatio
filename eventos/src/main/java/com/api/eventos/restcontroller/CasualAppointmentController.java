@@ -64,7 +64,7 @@ public class CasualAppointmentController {
 
     }
 
-    @GetMapping("/find/{organization}")
+    @GetMapping("/find/organization/{organization}")
     public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "organization") String organization) {
         Map<String, Object> response = new HashMap<>();
         List<Appointment> appointment = service.findByOrganization(organization);
@@ -75,7 +75,7 @@ public class CasualAppointmentController {
 
     }
 
-    @GetMapping("/find/{organization}/{event}")
+    @GetMapping("/find/organization_and_event/{organization}/{event}")
     public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "organization") String organization,
                                                          @PathVariable(name = "event") String event) {
         Map<String, Object> response = new HashMap<>();

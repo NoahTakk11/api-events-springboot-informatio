@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
@@ -21,16 +22,18 @@ public class EventDto {
 
     private Long id;
 
-    @NotEmpty(message = "Name can be not empty")
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String generationDate = formato.format( new Date());
 
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @NotNull(message = "Date cannot be empty")
+    private Date date;
 
+    @NotEmpty(message = "There must be a description")
     private String description;
 
     private Organization organization;

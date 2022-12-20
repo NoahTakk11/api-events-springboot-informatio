@@ -32,4 +32,6 @@ public interface IPersonDao extends JpaRepository<Person, Long> {
 
     @Query(value = "SELECT p FROM person p WHERE active=true AND dni= :dni")
     Optional<Person> findByDni(String dni);
+
+    Optional<Person> findByAlphanumericKey(String token);
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -22,7 +23,7 @@ public class Appointment implements Serializable {
     @Column(nullable=false, unique = true)
     private Long id;
 
-    private LocalDate date;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "event_id")

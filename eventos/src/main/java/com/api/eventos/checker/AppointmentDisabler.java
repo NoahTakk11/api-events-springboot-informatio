@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class AppointmentDisabler {
@@ -21,11 +22,11 @@ public class AppointmentDisabler {
     @Scheduled(fixedDelay = MINUTE, initialDelay = SECOND)
     public void eventDisabler() {
         List<Appointment> appointments = appointmentDao.findAll();
-        LocalDate today = LocalDate.now();
+        Date today = new Date();
 
         if (appointments.size() > 0) {
 
-            appointments.stream().forEach((e) -> e.setActive(true && today.isBefore(e.getDate()) || false));
+            appointments.stream().forEach((e) -> e.setActive(true && today.before(e.getDate()) || false));
             appointments.stream().forEach((e) -> appointmentDao.save(e));
             appointments.stream().forEach((e) -> AppointmentWrapper.entityToDto(e));
 

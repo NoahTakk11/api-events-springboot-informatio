@@ -1,5 +1,6 @@
 package com.api.eventos.restcontroller;
 
+import com.api.eventos.dto.EventDto;
 import com.api.eventos.dto.OrganizationDto;
 import com.api.eventos.entity.Organization;
 import com.api.eventos.repository.IOrganizationDao;
@@ -112,47 +113,26 @@ public class OrganizationController {
     }
 
     @PutMapping("/update/{id}/access_token/{token}")
-    public ResponseEntity<Map<String, Object>> update(@PathVariable(name = "id") Long id,
-                                                      @PathVariable(name = "token") String token,
-                                                      @RequestBody OrganizationDto dto) {
+    public ResponseEntity<String> update(@PathVariable(name = "id") Long id,
+                                         @PathVariable(name = "token") String token,
+                                         @RequestBody OrganizationDto dto){
 
-        Organization organizationId = service.findById(id);
-        List<String> accessToken = new ArrayList<>();
-        accessToken.add(organizationId.getAccessToken());
-        Map<String, Object> response = new HashMap<>();
+        Organization organizationObjective = service.findByAccessToken(token);
 
-        ResponseEntity<Map<String, Object>> responseEntity = null;
+        if (organizationObjective == null || !token.equals(organizationObjective.getAccessToken())) {
 
-        if (accessToken.contains(token)) {
-            dto.setId(organizationId.getId());
-            dto.setAccessToken(organizationId.getAccessToken());
-            dto.setGenerationDate(organizationId.getGenerationDate());
-            OrganizationDto updateOrganization = service.update(dto);
-            response.put("organization", updateOrganization);
-            response.put("message", "Organization is updated.");
-            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-
-        }else {
-            response.put("message", "Something has gone wrong");
-            responseEntity = new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
 
-        return responseEntity;
+        if (service.findById(id) == null) {
 
+            return ResponseEntity.badRequest().build();
+        }
+
+        service.update(id, dto);
+
+        return ResponseEntity.ok("Update successful");
     }
-
-    /*@PatchMapping("/partial_update/{id}")
-    public ResponseEntity<Map<String, Object>> partialUpdate(@PathVariable(name = "id") Long id,
-                                                             @RequestBody OrganizationDto dto) {
-        Organization organizationId = service.findById(id);
-        Map<String, Object> response = new HashMap<>();
-        dto.setId(organizationId.getId());
-        OrganizationDto updateOrganization = service.partialUpdate(dto);
-
-        response.put("message", "The organizatin with name " + dto.getName() + " has been updated");
-
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-    }*/
 
 
 

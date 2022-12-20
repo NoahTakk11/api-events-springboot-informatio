@@ -1,5 +1,6 @@
 package com.api.eventos.restcontroller;
 
+import com.api.eventos.dto.OrganizationDto;
 import com.api.eventos.dto.PersonDto;
 import com.api.eventos.entity.Organization;
 import com.api.eventos.entity.Person;
@@ -53,7 +54,7 @@ public class PersonController {
 
     }
 
-    @GetMapping("/find/{dni}")
+    @GetMapping("/find/dni/{dni}")
     public ResponseEntity<Map<String, Object>> getByDni(@PathVariable(name = "dni") String dni) {
         Map<String, Object> response = new HashMap<>();
         Person person = service.findByDni(dni);
@@ -64,7 +65,7 @@ public class PersonController {
 
     }
 
-    @GetMapping("/find/{lastname}")
+    @GetMapping("/find/lastname/{lastname}")
     public ResponseEntity<Map<String, Object>> getByLastname(@PathVariable(name = "lastname") String lastname) {
         Map<String, Object> response = new HashMap<>();
         Person person = service.findByLastname(lastname);
@@ -83,7 +84,7 @@ public class PersonController {
         Person personId = service.findById(id).orElseThrow();
         Map<String, Object> response = new HashMap<>();
         List<String> accessToken = new ArrayList<>();
-        accessToken.add(personId.getAlphanumerickey());
+        accessToken.add(personId.getAlphanumericKey());
 
         ResponseEntity<Map<String, Object>> responseEntity = null;
         if (accessToken.contains(token)) {
@@ -98,32 +99,25 @@ public class PersonController {
     }
 
     @PutMapping("/update/{id}/access_token/{token}")
-    public ResponseEntity<Map<String, Object>> update(@PathVariable(name = "id") Long id,
-                                                      @PathVariable(name = "token") String token,
-                                                      @RequestBody PersonDto dto) {
+    public ResponseEntity<String> update(@PathVariable(name = "id") Long id,
+                                         @PathVariable(name = "token") String token,
+                                         @RequestBody PersonDto dto){
 
-        Person perosonId = service.findById(id).orElseThrow();
-        List<String> accessToken = new ArrayList<>();
-        accessToken.add(perosonId.getAlphanumerickey());
-        Map<String, Object> response = new HashMap<>();
+        Person personObjective = service.findByAccessToken(token);
 
-        ResponseEntity<Map<String, Object>> responseEntity = null;
+        if (personObjective == null || !token.equals(personObjective.getAlphanumericKey())) {
 
-        if (accessToken.contains(token)) {
-            dto.setId(perosonId.getId());
-            dto.setAlphanumerickey(perosonId.getAlphanumerickey());
-            PersonDto updatePerson = service.update(dto);
-            response.put("person", updatePerson);
-            response.put("message", "Person is updated.");
-            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-
-        }else {
-            response.put("message", "Something has gone wrong");
-            responseEntity = new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
 
-        return responseEntity;
+        if (service.findById(id) == null) {
 
+            return ResponseEntity.badRequest().build();
+        }
+
+        service.update(id, dto);
+
+        return ResponseEntity.ok("Update successful");
     }
 
 }

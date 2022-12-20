@@ -52,18 +52,42 @@ public class EventController {
     }
 
 
-    @PutMapping("/update")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody EventDto dto){
-        Map<String, Object> response = new HashMap<>();
-        EventDto updateEvent = service.update(dto);
+    @PutMapping("/update/{id}/access_token/{token}")
+    public ResponseEntity<String> update(@PathVariable(name = "id") Long id,
+                                                      @PathVariable(name = "token") String token,
+                                                      @RequestBody EventDto dto){
 
-        if(updateEvent == null) {
-            response.put("message", "Updated is fail.");
+        Organization organizationObjective = organizationService.findByAccessToken(token);
+
+        if (organizationObjective == null || !token.equals(organizationObjective.getAccessToken())) {
+
+            return ResponseEntity.badRequest().build();
         }
 
-        response.put("event", updateEvent);
-        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+        if (service.findById(id) == null) {
+
+            return ResponseEntity.badRequest().build();
+        }
+
+        service.update(id, dto);
+
+        return ResponseEntity.ok("Update successful");
     }
+
+    /*@PutMapping("/update")
+    public ResponseEntity<Map<String, Object>> update(@RequestBody EventDto userDto){
+        Map<String, Object> response = new HashMap<>();
+        EventDto updateUser = service.create(userDto);
+
+        if(updateUser == null) {
+            response.put("mensaje", "No se pudo actualizar la informacion del usuario.");
+        }
+
+        response.put("user", updateUser);
+        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+    }*/
+
+
 
     @GetMapping("/find/all")
     public ResponseEntity<Map<String, Object>> getAll() {

@@ -1,7 +1,9 @@
 package com.api.eventos.service;
 
 
+import com.api.eventos.dto.EventDto;
 import com.api.eventos.dto.OrganizationDto;
+import com.api.eventos.entity.Event;
 import com.api.eventos.entity.Organization;
 import com.api.eventos.repository.IOrganizationDao;
 import com.api.eventos.wrapper.OrganizationWrapper;
@@ -69,30 +71,20 @@ public class OrganizationServiceImpl implements  IOrganizationService {
         return dao.findByCuit(cuit).orElseThrow();
     }
 
-
-   /* @Override
-    public OrganizationDto partialUpdate(OrganizationDto dto, Long id) {
-        Organization organizationExist = dao.findById(dto.getId()).orElseThrow();
+    @Override
+    public void update(Long id, OrganizationDto dto) {
+        Organization organizationExist = dao.findById(id).orElseThrow();
 
         if (organizationExist != null) {
-            Organization entityToPersist = new Organization();
-            //entityToPersist.setId(dto.getId());
-            entityToPersist.setName(dto.getName());
-            entityToPersist.setPhone(dto.getPhone());
-            entityToPersist.setEmail(dto.getEmail());
-            entityToPersist.setAddress(dto.getAddress());
-            entityToPersist.setCuit(dto.getCuit());
-            entityToPersist.setActive(dto.getActive());
-            entityToPersist.setAccessToken(organizationExist.getAccessToken());
-            entityToPersist.setGenerationDate(organizationExist.getGenerationDate());
-
-            organizationExist = dao.save(entityToPersist);
-            dto = OrganizationWrapper.entityToDto(organizationExist);
-            return dto;
-
+            organizationExist.setName(dto.getName());
+            organizationExist.setEmail(dto.getEmail());
+            organizationExist.setAddress(dto.getAddress());
+            organizationExist.setCuit(dto.getCuit());
+            organizationExist.setPhone(dto.getPhone());
+            dao.save(organizationExist);
         }
-        return null;
-    }*/
+    }
+
 
 
 

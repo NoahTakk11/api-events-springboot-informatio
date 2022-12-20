@@ -27,7 +27,7 @@ public class Event implements Serializable {
 
     private String generationDate;
 
-    private LocalDate date;
+    private Date date;
 
     private String description;
 

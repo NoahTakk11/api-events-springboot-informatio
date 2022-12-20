@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -25,11 +26,11 @@ public class EventDisabler  {
     @Scheduled(fixedDelay = MINUTE, initialDelay = SECOND)
     public void eventDisabler() {
         List<Event> events = event.findAll();
-        LocalDate today = LocalDate.now();
+        Date today = new Date();
 
         if (events.size() > 0) {
 
-            events.stream().forEach((e) -> e.setActive(true && today.isBefore(e.getDate()) || false));
+            events.stream().forEach((e) -> e.setActive(true && today.before(e.getDate()) || false));
             events.stream().forEach((e) -> event.save(e));
             events.stream().forEach((e) -> EventWrapper.entityToDto(e));
 

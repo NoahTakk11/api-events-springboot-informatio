@@ -39,24 +39,16 @@ public class EventServiceImpl implements IEventService {
     }
 
     @Override
-    public EventDto update(EventDto dto) {
-        Event eventExist = dao.findByName(dto.getName());
+    public void update(Long id, EventDto dto) {
+        Event eventExist = dao.findById(id).orElseThrow();
 
         if (eventExist != null) {
-            Event entityToPersist = new Event();
-            entityToPersist.setId(eventExist.getId());
-            entityToPersist.setName(dto.getName());
-            entityToPersist.setDate(dto.getDate());
-            entityToPersist.setDescription(dto.getDescription());
-            entityToPersist.setGenerationDate(dto.getGenerationDate());
-            entityToPersist.setActive(dto.getActive());
-
-            eventExist = dao.save(entityToPersist);
-            dto = EventWrapper.entityToDto(eventExist);
-            return dto;
-
+            eventExist.setName(dto.getName());
+            eventExist.setDescription(dto.getDescription());
+            eventExist.setDate(dto.getDate());
+            dao.save(eventExist);
         }
-        return null;
+
     }
 
     @Override

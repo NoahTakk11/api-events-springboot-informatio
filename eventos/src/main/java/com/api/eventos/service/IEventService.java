@@ -8,16 +8,16 @@ import java.util.Optional;
 
 public interface IEventService {
 
-    public List<Event> getAll();
+    List<Event> getAll();
 
-    public Optional<Event> findById(Long id);
+    Optional<Event> findById(Long id);
 
     Event findByName(String name);
 
-    public EventDto create(EventDto dto);
+    EventDto create(EventDto dto);
 
-    public EventDto update(EventDto dto);
+    void update(Long id, EventDto dto);
 
-    public Boolean deleteById(Long id);
+    Boolean deleteById(Long id);
 
 }

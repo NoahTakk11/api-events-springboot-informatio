@@ -19,16 +19,16 @@ public class OrganizationDto {
 
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
-    @NotEmpty
+    @NotEmpty(message = "Cuit cannot be empty")
     private String cuit;
 
-    @NotEmpty
+    @NotEmpty(message = "Phone cannot be empty")
     private String phone;
-    @NotEmpty
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
-    @NotEmpty
+    @NotEmpty(message = "Address cannot be empty")
     private String address;
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private String generationDate = formato.format( new Date());

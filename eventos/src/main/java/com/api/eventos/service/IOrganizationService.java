@@ -1,5 +1,6 @@
 package com.api.eventos.service;
 
+import com.api.eventos.dto.EventDto;
 import com.api.eventos.dto.OrganizationDto;
 import com.api.eventos.entity.Organization;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,8 @@ public interface IOrganizationService {
     List<Organization> customerGetAll();
 
     Organization findByCuit(String cuit);
+
+    void update(Long id, OrganizationDto dto);
 
 
 }
