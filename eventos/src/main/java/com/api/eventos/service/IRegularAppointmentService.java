@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface IRegularAppointmentService {
 
-    public Appointment create(RegularAppointmentDto dto);
+    Appointment create(RegularAppointmentDto dto);
 
-    public Appointment findById(Long id);
+    Appointment findById(Long id);
 
-    public List<Appointment> getAll();
+    List<Appointment> getAll();
 
-    public Boolean deleteById(Long id);
+    Boolean deleteById(Long id);
 
     List<Appointment> findByOrganization(String organization);
 

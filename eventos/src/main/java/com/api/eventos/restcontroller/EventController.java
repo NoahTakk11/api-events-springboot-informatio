@@ -74,20 +74,6 @@ public class EventController {
         return ResponseEntity.ok("Update successful");
     }
 
-    /*@PutMapping("/update")
-    public ResponseEntity<Map<String, Object>> update(@RequestBody EventDto userDto){
-        Map<String, Object> response = new HashMap<>();
-        EventDto updateUser = service.create(userDto);
-
-        if(updateUser == null) {
-            response.put("mensaje", "No se pudo actualizar la informacion del usuario.");
-        }
-
-        response.put("user", updateUser);
-        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
-    }*/
-
-
 
     @GetMapping("/find/all")
     public ResponseEntity<Map<String, Object>> getAll() {
@@ -133,14 +119,4 @@ public class EventController {
         return responseEntity;
     }
 
-    /*@GetMapping("/find/{name}")
-    public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "name") String name) {
-        Map<String, Object> response = new HashMap<>();
-        Optional<Event> event = Optional.ofNullable(service.findByName(name));
-
-        response.put("event", event);
-        response.put("message", "Event is find.");
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-
-    }*/
 }

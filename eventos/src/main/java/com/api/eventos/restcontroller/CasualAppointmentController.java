@@ -53,6 +53,16 @@ public class CasualAppointmentController {
 
     }
 
+    @GetMapping("/find/all")
+    public ResponseEntity<Map<String, Object>> getAll() {
+        Map<String, Object> response = new HashMap<>();
+        List<Appointment> appointmentList = new ArrayList<>();
+        appointmentList = service.getAll();
+        response.put("events", appointmentList);
+
+        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Map<String, Object>> getByName(@PathVariable(name = "id") Long id) {
         Map<String, Object> response = new HashMap<>();
