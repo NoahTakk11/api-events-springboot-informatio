@@ -1,4 +1,4 @@
-#API de Turnos - README
+API de Turnos - README
 Bienvenido/a al proyecto final de "Trabajo Práctico Integrador", una API REST diseñada para administrar turnos para eventos u ocasiones especiales de cualquier empresa u organización. Este documento le proporcionará una visión general del proyecto y cómo interactuar con la API.
 
 Descripción del proyecto
